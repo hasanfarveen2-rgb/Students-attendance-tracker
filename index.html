@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Attendance Register</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div><h1>Attendance Register</h1><p id="dateLabel"></p></div>
+  <button class="btn primary" id="addBtn">Add student</button>
+</header>
+
+<section class="summary" aria-label="Attendance summary">
+  <div class="stat"><b id="sTotal">0</b><span>Total students</span></div>
+  <div class="stat ok"><b id="sPresent">0</b><span id="sPresentL">Present</span></div>
+  <div class="stat bad"><b id="sAbsent">0</b><span>Absent</span></div>
+  <div class="stat"><b id="sPct">—</b><span>Overall attendance</span></div>
+</section>
+
+<section class="bar" aria-label="Date, search and filters">
+  <label>Date<input type="date" id="date"></label>
+  <label class="grow">Search name or ID<input type="search" id="q" placeholder="e.g. Priya or BCA101"></label>
+  <label>Department<select id="dept"><option value="">All</option></select></label>
+  <label>Status on date<select id="stat"><option value="">All</option><option>Present</option><option>Absent</option><option>Late</option><option>Leave</option><option value="none">Not marked</option></select></label>
+  <label>Low-attendance limit (%)<input type="number" id="thr" min="1" max="100"></label>
+  <label class="chk"><input type="checkbox" id="low">Low only</label>
+  <button class="btn" id="allP">Mark all shown present</button>
+</section>
+<p class="note">Percentage = (Present + Late) ÷ (Present + Late + Absent). Leave is excused and not counted. Tap a selected status again to clear it.</p>
+
+<ul id="list" aria-live="polite"></ul>
+</div>
+
+<dialog id="stDlg"><form class="dlg" id="stForm">
+  <h2 id="stTitle">Add student</h2>
+  <label>Student ID<input id="fId" required maxlength="20" autocomplete="off"></label>
+  <label>Full name<input id="fName" required maxlength="60" autocomplete="off"></label>
+  <label>Department<input id="fDept" required maxlength="40" list="deptList" autocomplete="off"></label>
+  <datalist id="deptList"></datalist>
+  <p class="err" id="stErr"></p>
+  <div class="end"><button type="button" class="btn" data-close>Cancel</button><button class="btn primary">Save student</button></div>
+</form></dialog>
+
+<dialog id="hiDlg"><div class="dlg">
+  <h2 id="hiTitle"></h2>
+  <div class="chips" id="hiChips"></div>
+  <ul class="hist" id="hiList"></ul>
+  <div class="end"><button class="btn" data-close>Close</button></div>
+</div></dialog>
+
+<dialog id="cfDlg"><div class="dlg">
+  <h2>Delete student?</h2>
+  <p id="cfText" style="margin:0"></p>
+  <div class="end"><button class="btn" data-close>Cancel</button><button class="btn danger" id="cfOk">Delete</button></div>
+</div></dialog>
+
+<div id="toast" role="status"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
